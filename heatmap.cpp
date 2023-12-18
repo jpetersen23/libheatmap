@@ -245,7 +245,7 @@ heatmap_stamp_t* heatmap_stamp_new_with(unsigned w, unsigned h, float* data)
     return stamp;
 }
 
-heatmap_stamp_t* heatmap_stamp_load(unsigned w, unsigned h, float* data)
+heatmap_stamp_t* heatmap_stamp_load(unsigned w, unsigned h, const float* data)
 {
     float* copy = (float*)malloc(sizeof(float)*w*h);
     memcpy(copy, data, sizeof(float)*w*h);

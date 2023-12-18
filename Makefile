@@ -9,9 +9,15 @@ AR?=ar
 # Note1: OpenMP is (currently) not required by the lib, just for precise benchmarking.
 # Note2: the -Wa,-ahl=... part only generates .s assembly so one can see generated code.
 # Note3: If you want to add `-flto`, you should add the same -O to LDFLAGS as to FLAGS.
+OS_NAME := $(shell uname -s | tr A-Z a-z)
+
+ifeq ($(OS_NAME),darwin)
+DEFAULT_FLAGS=-O3 -g -DNDEBUG -Wall -Wextra
+DEFAULT_LDFLAGS=
+else
 DEFAULT_FLAGS=-O3 -g -DNDEBUG -fopenmp -Wall -Wextra -Wa,-ahl=$(@:.o=.s)
 DEFAULT_LDFLAGS=-fopenmp
-
+endif
 # Debug mode
 # DEFAULT_FLAGS=-fPIC -Wall -Wextra -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -I. -O0 -g -fopenmp -Wa,-ahl=$(@:.o=.s)
 # DEFAULT_LDFLAGS=-fopenmp -g
@@ -54,16 +60,16 @@ clean:
 test: tests
 	tests/test
 
-heatmap.o: heatmap.c heatmap.h
+heatmap.o: heatmap.cpp heatmap.h
 	$(CC) -c $< $(CFLAGS) -o $@
 
-colorschemes/%.o: colorschemes/%.c colorschemes/%.h
+colorschemes/%.o: colorschemes/%.cpp colorschemes/%.h
 	$(CC) -c $< $(CFLAGS) -o $@
 
-libheatmap.a: heatmap.o $(patsubst %.c,%.o,$(wildcard colorschemes/*.c))
+libheatmap.a: heatmap.o $(patsubst %.cpp,%.o,$(wildcard colorschemes/*.cpp))
 	$(AR) rs $@ $^
 
-libheatmap.so: heatmap.o $(patsubst %.c,%.o,$(wildcard colorschemes/*.c))
+libheatmap.so: heatmap.o $(patsubst %.cpp,%.o,$(wildcard colorschemes/*.cpp))
 	$(CC) $(LDFLAGS) -shared -o $@ $^
 
 tests/test.o: tests/test.cpp

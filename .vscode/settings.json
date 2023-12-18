@@ -1,0 +1,8 @@
+{
+        "python.testing.pytestArgs": [
+        "--durations=0",
+        "tests/pybind11/tests.py"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false
+}

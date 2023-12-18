@@ -126,7 +126,7 @@ unsigned char* heatmap_render_saturated_to(const heatmap_t* h, const heatmap_col
  *
  * For more information about stamps, read `heatmap_stamp_t`'s documentation.
  */
-heatmap_stamp_t* heatmap_stamp_load(unsigned w, unsigned h, float* data);
+heatmap_stamp_t* heatmap_stamp_load(unsigned w, unsigned h, const float* data);
 
 /* Generates a default round stamp of a given radius. This means the stamp will
  * have a size of 2*radius+1 square. The default stamp is just a spherical

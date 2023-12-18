@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "pybind11>=2.10.0"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+ addopts="-n 8"
+
+[tool.cibuildwheel]
+test-requires = "pytest pytest-xdist"
+before-test = "pip install -r tests/pybind11/requirements.txt"
+test-command = "pytest -v -n auto --durations=0 {project}/tests/pybind11/tests.py"
+test-skip = "*universal2:arm64"
+
+[tool.ruff]
+target-version = "py37"
+
+[tool.ruff.lint]
+extend-select = [
+  "B",   # flake8-bugbear
+  "I",   # isort
+  "PGH", # pygrep-hooks
+  "RUF", # Ruff-specific
+  "UP",  # pyupgrade
+]
