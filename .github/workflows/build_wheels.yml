@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install GCC
-        uses: egor-tensin/setup-gcc@v1.3
+      - uses: pkgxdev/setup@v1
+      - run: pkgx shellcheck
             
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.2
